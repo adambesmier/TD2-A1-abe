@@ -53,9 +53,25 @@ def supprimer_accents(texte):
 
     return texte_sans_accents
 
-def calculer_ic(texte):
-    """TODO: Renvoyer l'indice de coïncidence du texte passé en paramètre. """
+Alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+            "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+            "u", "v", "w", "x", "y", "z"]
 
+def calculer_ic(texte):
+    occurences={}
+    for i in Alphabet :
+        occurences[i]=0
+    for x in texte :
+        occurences[x]+=1
+    frequences={}
+    for i in Alphabet :
+        frequences[i]=occurences[i]/len(texte)
+    return frequences
+    
+
+
+def normaliser (texte):
+    
 if __name__ == "__main__":
     if len(sys.argv) <2 :
         sys.stderr.write("Pas assez d'arguments fournis.\n")

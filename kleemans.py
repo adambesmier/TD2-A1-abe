@@ -22,8 +22,10 @@ def lire_fichier(fichier):
 ### gestion des données de référence (cf. fichier letter_frequency.csv) #########################################
 
 def lire_csv(path):
-    """TODO: Renvoyer les données d'un fichier csv sous forme de listes de lignes. 
-    Hypothèses : fichier structuré à l'aide du séparateur ";" / encodé en utf-8. """
+    """TODO: Renvoyer les données d'un fichier csv sous forme de listes de lignes. """
+    with open("letter_frequency.csv", encoding="utf-8") as fichier:
+        lecteur = csv.reader(fichier, delimiter=";")
+        data = list(lecteur)
 
     
 def fixture_lire_csv(path): 
@@ -123,6 +125,8 @@ def fixture_enrichir_reference_freqs(ref,langue, chemin):
     ref["English"]['e'] = 0.12545990890967146 
     ref["English"]['f'] = 0.019287809780054135
 
+
+
 def enrichir_reference_freqs(ref,langue, chemin): 
     """TODO: Ajouter les caractères d'une langue à partir de la lecture d'un texte. """
     # Il faut que tous les caractères apparaissent dans cette langue (comme dans les autres)
@@ -135,13 +139,23 @@ def fixture_compter_occurrences(texte) :
     """Fixture: renvoie un exemple de ce que devrait renvoyer la fonction pour le texte du fichier "VoixAmbigue". """
     return {'e': 2, 'x': 3, 't': 4, 'r': 1, 'a': 2, 'i': 3, 's': 1, 'v': 1, 'o': 1, 'm': 1, 'b': 1, 'g': 1, 'u': 1}, 22
 
+alphabet = [
+    ["a", "A"], ["b", "B"], ["c", "C"], ["d", "D"],
+    ["e", "E"], ["f", "F"], ["g", "G"], ["h", "H"],
+    ["i", "I"], ["j", "J"], ["k", "K"], ["l", "L"],
+    ["m", "M"], ["n", "N"], ["o", "O"], ["p", "P"],
+    ["q", "Q"], ["r", "R"], ["s", "S"], ["t", "T"],
+    ["u", "U"], ["v", "V"], ["w", "W"], ["x", "X"],
+    ["y", "Y"], ["z", "Z"]
+]
+
 def compter_occurrences(texte): 
-    """TODO: Parcourir les caractères alphabétiques d'un texte afin de produire un dictionnaire 
-    contenant le *nombre d'occurrences* de chaque lettre dans le texte. 
-    - Cette fonction ne devra pas distinguer la casse des caractères : 'a' ou 'A' représentent la même chose. 
-    - Cette fonction devra renvoyer un tuple composé du dictionnaire d'occurrences généré et du nombre total de caractères alphabétiques trouvés. """
     occ = {}    # dictionnaire indiquant les occurences de chacun des caractères alphabétiques dans le texte 
     nb = 0      # nombre de caractères du texte alphabétiques du texte
+    for i in texte :
+        if i!= " ":
+            occ[i.lower()]+=1
+            nb+=1
     return occ, nb
 
 ### FIN gestion des données de référence  #######################################################################
@@ -168,9 +182,9 @@ def fixture_normaliser_occurrences(d,n) :
     d['u'] = 0.045454545454545456
 
 def normaliser_occurrences(d, nb): 
-    """TODO: Normaliser sur place un dictionnaire d'occurrences pour qu'il contienne les *fréquences* des caractères du fichier texte à analyser. """
-    pass
-    
+    for x in d.keys():
+        d[x]/=nb
+    return    
 
 def fixture_calculer_mse(reference_freqs,texte_freqs, chaine=None):
     """Fixture: renvoie un extrait des scores mse calculés pour le texte du fichier "tourDuMonde80Jours_fr". """ 

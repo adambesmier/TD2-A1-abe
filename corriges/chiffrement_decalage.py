@@ -139,4 +139,6 @@ def traiter_arguments():
 if __name__ == "__main__":
     dec = traiter_arguments()
     s1 = lire_stdin()
-    print(chiffrer(s1,dec), end="")
+    for i in range (1,26):
+        print (i)
+        print(chiffrer(s1,i),end="")
